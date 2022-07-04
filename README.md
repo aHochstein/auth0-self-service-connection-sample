@@ -1,8 +1,10 @@
-# Express OpenID Connect Webapp Sample
+# Auth0 Self-Service Enterprise Connection Sample
 
-This sample demonstrates authentication for an Express Node.js app. The sample quickly shows how to log in, log out, and view profile information of the logged-in user.
+This sample demonstrates a simple self service app which utelizes management API to add a Enterprise Connection to your tenant. This sample currently supports SAML and OIDC as connection strategy.
 
-See a detailed walk-through of this sample app on the [Express Quickstart](https://auth0.com/docs/quickstart/webapp/express).
+This i build upon this sample app [Express Quickstart](https://auth0.com/docs/quickstart/webapp/express).
+
+To run this sample you need a M2M Application with the connection:create scope against the Auth0 Management API.
 
 ## Running This Sample Locally
 
@@ -19,7 +21,9 @@ npm install
 
 - `CLIENT_ID` - your Auth0 application client id
 - `ISSUER_BASE_URL` - absolute URL to your Auth0 application domain (ie: `https://accountName.auth0.com`)
-- `APP_SESSION_SECRET` - a randomly rengerated string. You can generate one on the command line with the following `openssl rand -hex 32`
+- `MANAGEMENT_DOMAIN` - your Auth0 domain the management client connects against
+- `MANAGEMENT_CLIENT_ID` - your Auth0 application client id with permissions against the Management API
+- `MANAGEMENT_CLIENT_SECRET` - your Auth0 application client secret
 
 ```bash
 mv .env.example .env
