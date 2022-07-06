@@ -2,7 +2,7 @@ var router = require('express').Router();
 var management = require('../services/management')
 const { requiresAuth } = require('express-openid-connect');
 const oidcResolver = require('../services/oidc-configuration-resolver');
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 
 router.get('/', function (req, res, next) {
   res.render('index', {
@@ -25,21 +25,6 @@ router.get('/self-service', requiresAuth(), function (req, res, next) {
 });
 
 router.post('/self-service', requiresAuth(), async function (req, res, next) {
-  if(req.body.strategy === 'oidc') {
-    await body('config').isURL().run(req)
-  }
-  else {
-    await body('signInEndpoint').isURL().run(req)
-  }
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.render('self-service', {
-      title: 'Self Service Inbound Idp',
-      error: 'No valid URL'
-    });
-  }
-
   var result = false
   var openIdConfig = await oidcResolver(req.body.config)
   if(req.body.strategy === 'oidc') {
