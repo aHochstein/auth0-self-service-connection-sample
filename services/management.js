@@ -21,17 +21,18 @@ const createOidcConnection = async(name, options) => {
       }, 
       enabled_clients : [process.env.MANAGEMENT_SELF_SERVICE_CLIENT_ID]
     })
-    return true
+    return { success: true,
+      tryuri: buildTryUri(response.name),
+      id: response.id }
   }
   catch(e) {
-    console.log(e)
-    return false
+    return { success: false, error: e.message }            
   }
 }
 
 const createSamlConnection = async(name, options) => {
   try {
-    await client.createConnection({
+    var response = await client.createConnection({
       name : name,
       strategy:  "samlp",
       options : {
@@ -40,11 +41,12 @@ const createSamlConnection = async(name, options) => {
       },
       enabled_clients : [process.env.MANAGEMENT_SELF_SERVICE_CLIENT_ID]
     })
-    return true
+    return { success: true,
+      tryuri: buildTryUri(response.name),
+      id: response.id }
   }
   catch(e) {
-    console.log(e)
-    return false
+    return { success: false, error: e.text }            
   }
 }
 
@@ -58,6 +60,11 @@ const deleteConnection = async(id) => {
   }
 }
 
+const buildTryUri = (connection) => {
+  return 'https://' + process.env.MANAGEMENT_DOMAIN + '/authorize?client_id=' + process.env.MANAGEMENT_TESTER_CLIENT_ID + 
+  '&response_type=code&connection=' + connection + 
+  '&prompt=login&scope=openid%20profile&redirect_uri=https://manage.auth0.com/tester/callback?connection=' + connection
+}
 
 module.exports.createOidcConnection = createOidcConnection
 module.exports.createSamlConnection = createSamlConnection

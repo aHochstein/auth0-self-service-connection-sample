@@ -68,6 +68,11 @@
         <%= error %>
       </div>
    <% } %>
+
+    <div id="alert-oidc" style="display: none;"class="alert alert-primary" role="alert">
+      You may need to configure the OIDC Issuer with this callback URL: https://<%= locals.domain %>/login/callback
+    </div>
+
     <br>
     <button class="btn btn-success" type="submit" value="Create">Create Connection</button>
 
@@ -82,6 +87,7 @@
         if ( this.value == 'oidc')
         {
           $("#oidc").show();
+          $("#alert-oidc").show();
           $("#oidc :input").prop('required',true);
 
           $("#samlp").hide();
@@ -93,6 +99,7 @@
           $("#samlp :input").prop('required',true);
 
           $("#oidc").hide();
+          $("#alert-oidc").hide();
           $("#oidc :input").prop('required',false);
         }
       });

@@ -2,7 +2,7 @@ var router = require('express').Router();
 var management = require('../services/management')
 const { requiresAuth } = require('express-openid-connect');
 const oidcResolver = require('../services/oidc-configuration-resolver');
-const { body } = require('express-validator');
+const { response } = require('express');
 
 router.get('/', function (req, res, next) {
   res.render('index', {
@@ -20,8 +20,18 @@ router.get('/profile', requiresAuth(), function (req, res, next) {
 
 router.get('/self-service', requiresAuth(), function (req, res, next) {
   res.render('self-service', {
-    title: 'Self Service Inbound Idp'
+    title: 'Self Service Inbound Idp',
+    domain: process.env.MANAGEMENT_DOMAIN
   });
+});
+
+router.post('/self-service/:id', requiresAuth(), async function (req, res, next) {
+  var result = await management.deleteConnection(req.params.id)
+  if(result) {
+    return res.render('self-service-delete-success', {
+      title: 'Self Service Connection Deleted',
+    })
+  }
 });
 
 router.post('/self-service', requiresAuth(), async function (req, res, next) {
@@ -42,11 +52,19 @@ router.post('/self-service', requiresAuth(), async function (req, res, next) {
       signingCert : req.body.signingCert
     })
   } 
-  if(result) {
-    res.render('self-service-success', {
-      title: 'Self Service Inbound Idp'
+  if(result.success) {
+    return res.render('self-service-success', {
+      title: 'Self Service Inbound Idp',
+      tryuri: result.tryuri,
+      id: result.id
     })
-  };
+  } 
+  else {
+    return res.render('self-service', {
+      title: 'Self Service Inbound Idp',
+      error: result.error
+    })
+  }
 });
 
 module.exports = router;
