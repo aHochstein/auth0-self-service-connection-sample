@@ -4,7 +4,7 @@ This sample demonstrates a simple self service app which utelizes management API
 
 This is build upon this sample app [Express Quickstart](https://auth0.com/docs/quickstart/webapp/express).
 
-To run this sample you need a M2M Application with the `create:connections` scope against the Auth0 Management API.
+To run this sample you need a M2M Application with the `create:connections` and `delete:connections` scope against the Auth0 Management API.
 
 ## Running This Sample Locally
 
@@ -24,6 +24,9 @@ npm install
 - `MANAGEMENT_DOMAIN` - your Auth0 domain the management client connects against
 - `MANAGEMENT_CLIENT_ID` - your Auth0 application client id with permissions against the Management API
 - `MANAGEMENT_CLIENT_SECRET` - your Auth0 application client secret
+- `MANAGEMENT_SELF_SERVICE_CLIENT_ID` - your Auth0 application client id on which the created connections will be initially enabled
+- `MANAGEMENT_TESTER_CLIENT_ID` - your Auth0 application client id to test the connections. To locate this use Management API Get Clients and look for the Client "All Applications" (this one is used to test your connection after creating it)
+
 
 ```bash
 mv .env.example .env
