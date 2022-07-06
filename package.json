@@ -3,6 +3,7 @@
   "scripts": {},
   "dependencies": {
     "auth0": "^2.42.0",
+    "axios": "^0.27.2",
     "debug": "~2.6.9",
     "dotenv": "^6.2.0",
     "ejs": "^3.1.8",
