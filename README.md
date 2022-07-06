@@ -2,7 +2,7 @@
 
 This sample demonstrates a simple self service app which utelizes management API to add a Enterprise Connection to your tenant. This sample currently supports SAML and OIDC as connection strategy.
 
-This i build upon this sample app [Express Quickstart](https://auth0.com/docs/quickstart/webapp/express).
+This is build upon this sample app [Express Quickstart](https://auth0.com/docs/quickstart/webapp/express).
 
 To run this sample you need a M2M Application with the `create:connections` scope against the Auth0 Management API.
 
